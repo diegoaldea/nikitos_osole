@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+
+use Inertia\Inertia;
 use App\Models\JobApplication;
 
 class JobApplicationController extends Controller
@@ -11,7 +13,7 @@ class JobApplicationController extends Controller
     {
         $applications = JobApplication::orderBy('read')->orderBy('created_at', 'desc')->get();
 
-        return inertia('Admin/JobApplications/Index', [
+        return Inertia::render('Admin/JobApplications/Index', [
             'applications' => $applications,
         ]);
     }

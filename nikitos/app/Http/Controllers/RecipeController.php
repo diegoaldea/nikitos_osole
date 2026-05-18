@@ -2,9 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\Recipe;
 
 class RecipeController extends Controller
 {
-    //
+    public function index(){
+        $recipes = Recipes::all();
+
+        return Inertia::render('Recipes/index', [
+            'recipes' => $recipes,
+        ]);
+    }
+
+    public function show(Recipe $recipe){
+        return Inertia::render('Recipes/Show', [
+            'recipe' => $recipe,
+        ]);
+    }
 }

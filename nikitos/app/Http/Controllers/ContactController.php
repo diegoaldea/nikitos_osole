@@ -10,7 +10,7 @@ use App\Models\JobApplication;
 
 class ContactController extends Controller
 {
-    public function Index(){
+    public function index(){
         return Inertia::render('Contact/Index');
     }
 

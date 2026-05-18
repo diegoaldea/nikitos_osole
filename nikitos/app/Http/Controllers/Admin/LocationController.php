@@ -5,61 +5,69 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Inertia\Inertia;
+use App\Models\Location;
+
 class LocationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $locations = Location::orderBy('province')->orderBy('city')->get();
+
+        return Inertia::render('Admin/Locations/Index', [
+            'locations' => $locations,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Locations/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'province' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
+        ]);
+
+        Location::create($request->all());
+
+        return redirect()->route('admin.locations.index')->with('success', 'Ubicación creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        return redirect()->route('admin.locations.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Location $location)
     {
-        //
+        return Inertia::render('Admin/Locations/Edit', [
+            'location' => $location,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Location $location)
     {
-        //
+        $request->validate([
+            'province' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
+        ]);
+
+        $location->update($request->all());
+
+        return redirect()->route('admin.locations.index')->with('success', 'Ubicación actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Location $location)
     {
-        //
+        $location->delete();
+
+        return redirect()->route('admin.locations.index')->with('success', 'Ubicación eliminada correctamente.');
     }
 }

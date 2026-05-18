@@ -5,61 +5,86 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Inertia\Inertia;
+use App\Models\Category;
+
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $categories = Category::withCount('products')->get();
+
+        return Inertia::render('Admin/Categories/Index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
-        //
+        return Inertia::render('Admin/Categories/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'color' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $imagePath = null;
+
+        if($request->hasFile('image')){
+            $imagePath = $request->file('image')->store('categories', 'public');
+        }
+
+        Category::create([
+            'name' => $request->name,
+            'color' => $request->color,
+            'image' => $imagePath,
+        ]);
+
+        return redirect()->route('admin.categories.index')->with('success', 'Categoría creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        return redirect()->route('admin.categories.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return Inertia::render('Admin/Categories/Edit', [
+            'category' => $category,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'color' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $imagePath = $category->image;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+        }
+
+        $category->update([
+            'name'  => $request->name,
+            'color' => $request->color,
+            'image' => $imagePath,
+        ]);
+
+        return redirect()->route('admin.categories.index')->with('success', 'Categoría actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->route('admin.categories.index')->with('success', 'Categoría eliminada correctamente.');
     }
 }

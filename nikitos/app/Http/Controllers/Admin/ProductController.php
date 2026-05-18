@@ -5,61 +5,111 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Inertia\Inertia;
+use App\Models\Product;
+use App\Models\Category;
+
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $products = Product::with('category')->get();
+
+        return Inertia::render('Admin/Products/Index', [
+            'products' => $products,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return Inertia::render('Admin/Products/Create', [
+            'categories' => $categories,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'code' => 'nullable|string|max:255',
+            'size' => 'nullable|string|max:255',
+            'shelf_life' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'featured' => 'boolean',
+        ]);
+
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+        Product::create([
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'code' => $request->code,
+            'size' => $request->size,
+            'shelf_life' => $request->shelf_life,
+            'image' => $imagePath,
+            'featured' => $request->boolean('featured'),
+        ]);
+
+        return redirect()->route('admin.products.index')->with('success', 'Producto creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        return redirect()->route('admin.products.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+
+        return Inertia::render('Admin/Products/Edit', [
+            'product'    => $product->load('category'),
+            'categories' => $categories,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'code' => 'nullable|string|max:255',
+            'size' => 'nullable|string|max:255',
+            'shelf_life' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'featured' => 'boolean',
+        ]);
+
+        $imagePath = $product->image;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+        $product->update([
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'code' => $request->code,
+            'size' => $request->size,
+            'shelf_life' => $request->shelf_life,
+            'image' => $imagePath,
+            'featured' => $request->boolean('featured'),
+        ]);
+
+        return redirect()->route('admin.products.index')->with('success', 'Producto actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return redirect()->route('admin.products.index')->with('success', 'Producto eliminado correctamente.');
     }
 }
