@@ -14,7 +14,9 @@ class CategoryController extends Controller
     {
         $categories = Category::withCount('products')->get();
 
-        return Inertia::render('Admin/Categories/Index');
+        return Inertia::render('Admin/Categories/Index', [
+            'categories' => $categories,
+        ]);
     }
 
     
