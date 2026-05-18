@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+use App\Http\Requests\StoreRecipeRequest;
+use App\Http\Requests\UpdateRecipeRequest;
 
 use Inertia\Inertia;
 use App\Models\Recipe;
@@ -24,17 +26,8 @@ class RecipeController extends Controller
         return Inertia::render('Admin/Recipes/Create');
     }
 
-    public function store(Request $request)
+    public function store(StoreRecipeRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'preparation_time' => 'required|integer|min:1',
-            'servings' => 'required|integer|min:1',
-            'ingredients' => 'required|array|min:1',
-            'steps' => 'required|array|min:1',
-        ]);
-
         $imagePath = null;
 
         if ($request->hasFile('image')) {
@@ -65,17 +58,8 @@ class RecipeController extends Controller
         ]);
     }
 
-    public function update(Request $request, Recipe $recipe)
+    public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'preparation_time' => 'required|integer|min:1',
-            'servings' => 'required|integer|min:1',
-            'ingredients' => 'required|array|min:1',
-            'steps' => 'required|array|min:1',
-        ]);
-
         $imagePath = $recipe->image;
 
         if ($request->hasFile('image')) {

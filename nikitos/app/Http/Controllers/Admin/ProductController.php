@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 
 use Inertia\Inertia;
 use App\Models\Product;
@@ -29,18 +31,8 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'code' => 'nullable|string|max:255',
-            'size' => 'nullable|string|max:255',
-            'shelf_life' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'featured' => 'boolean',
-        ]);
-
         $imagePath = null;
 
         if ($request->hasFile('image')) {
@@ -75,18 +67,8 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'code' => 'nullable|string|max:255',
-            'size' => 'nullable|string|max:255',
-            'shelf_life' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'featured' => 'boolean',
-        ]);
-
         $imagePath = $product->image;
 
         if ($request->hasFile('image')) {

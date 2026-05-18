@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+use App\Http\Requests\StoreLocationRequest;
+use App\Http\Requests\UpdateLocationRequest;
 
 use Inertia\Inertia;
 use App\Models\Location;
@@ -24,15 +26,8 @@ class LocationController extends Controller
         return Inertia::render('Admin/Locations/Create');
     }
 
-    public function store(Request $request)
+    public function store(StoreLocationRequest $request)
     {
-        $request->validate([
-            'province' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
-        ]);
-
         Location::create($request->all());
 
         return redirect()->route('admin.locations.index')->with('success', 'Ubicación creada correctamente.');
@@ -50,15 +45,8 @@ class LocationController extends Controller
         ]);
     }
 
-    public function update(Request $request, Location $location)
+    public function update(UpdateLocationRequest $request, Location $location)
     {
-        $request->validate([
-            'province' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
-        ]);
-
         $location->update($request->all());
 
         return redirect()->route('admin.locations.index')->with('success', 'Ubicación actualizada correctamente.');
