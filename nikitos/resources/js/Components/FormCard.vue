@@ -3,7 +3,7 @@
         <form @submit.prevent="$emit('submit')" class="bg-white rounded-lg shadow p-6 space-y-4">
             <slot />
 
-            <div class="flex gap-3 pt-2">
+            <div class="flex gap-3 pt-2 justify-end">
                 <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600">
                     Guardar
                 </button>
