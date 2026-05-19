@@ -1,0 +1,72 @@
+<template>
+    <AdminLayout>
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Postulaciones</h1>
+        </div>
+
+        <DataTable :headers="['Nombre', 'Email', 'Teléfono', 'Puesto', 'Estado', 'Acciones']">
+            <tr v-for="application in applications" :key="application.id" :class="!application.read ? 'bg-orange-50' : ''">
+                <td class="px-6 py-4 align-middle font-medium">{{ application.name }}</td>
+                <td class="px-6 py-4 align-middle">{{ application.email }}</td>
+                <td class="px-6 py-4 align-middle">{{ application.phone }}</td>
+                <td class="px-6 py-4 align-middle">{{ application.position }}</td>
+                <td class="px-6 py-4 align-middle">
+                    <span :class="application.read ? 'bg-gray-100 text-gray-500' : 'bg-orange-100 text-orange-700'" class="px-2 py-1 rounded text-xs">
+                        {{ application.read ? 'Leído' : 'Sin leer' }}
+                    </span>
+                </td>
+                <td class="px-6 py-4 align-middle">
+                    <div class="flex gap-2">
+                        <button @click="show(application)" class="text-cyan-700 hover:underline">Ver</button>
+                        <button v-if="!application.read" @click="markAsRead(application.id)" class="text-green-600 hover:underline">Marcar leído</button>
+                    </div>
+                </td>
+            </tr>
+        </DataTable>
+
+        <!-- Modal -->
+        <div v-if="selected" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full mx-4">
+                <h2 class="text-lg font-bold mb-4">{{ selected.name }}</h2>
+                <div class="space-y-2 text-sm">
+                    <p><span class="font-medium">DNI:</span> {{ selected.dni }}</p>
+                    <p><span class="font-medium">Sexo:</span> {{ selected.gender }}</p>
+                    <p><span class="font-medium">Fecha de nacimiento:</span> {{ selected.birth_date }}</p>
+                    <p><span class="font-medium">Dirección:</span> {{ selected.address }}</p>
+                    <p><span class="font-medium">Ciudad:</span> {{ selected.city }}</p>
+                    <p><span class="font-medium">Teléfono:</span> {{ selected.phone }}</p>
+                    <p><span class="font-medium">Email:</span> {{ selected.email }}</p>
+                    <p><span class="font-medium">Puesto:</span> {{ selected.position }}</p>
+                    <p v-if="selected.cv_path">
+                        <span class="font-medium">CV:</span>
+                        <a :href="`/storage/${selected.cv_path}`" target="_blank" class="text-cyan-700 hover:underline ml-1">Ver CV</a>
+                    </p>
+                </div>
+                <button @click="selected = null" class="mt-4 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </AdminLayout>
+</template>
+
+<script setup>
+import AdminLayout from '@/Layouts/AdminLayout.vue';
+import { router } from '@inertiajs/vue3';
+import DataTable from '@/Components/DataTable.vue';
+import { ref } from 'vue';
+
+defineProps({
+    applications: Array,
+});
+
+const selected = ref(null);
+
+function show(application) {
+    selected.value = application;
+}
+
+function markAsRead(id) {
+    router.patch(route('admin.job-applications.read', id));
+}
+</script>
