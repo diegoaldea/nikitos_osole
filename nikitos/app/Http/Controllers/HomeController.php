@@ -16,7 +16,7 @@ class HomeController extends Controller
         $recipes = Recipe::take(3)->get();
         $contents = SiteContent::pluck('value', 'key');
 
-        return Intertia::render('Home', [
+        return Inertia::render('Home', [
             'categories' => $categories,
             'featured_products' => $featured_products, 
             'recipes' => $recipes, 
