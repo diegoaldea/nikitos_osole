@@ -22,8 +22,6 @@
             </div>
         </nav>
 
-        <div class="h-[120px] sm:h-[140px]"></div>
-
         <main class="flex-1">
             <slot />
         </main>
