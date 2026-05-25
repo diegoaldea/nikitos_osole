@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AboutController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -25,6 +26,7 @@ Route::get('/productos/{product}', [ProductController::class, 'show'])->name('pr
 Route::get('/recetas', [RecipeController::class, 'index'])->name('recipes.index');
 Route::get('/recetas/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
 Route::get('/donde-comprar', [LocationController::class, 'index'])->name('locations.index');
+Route::get('/nosotros', [AboutController::class, 'index'])->name('about.index');
 Route::get('/contacto', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contacto/ventas', [ContactController::class, 'storeSales'])->name('contact.sales');
 Route::post('/contacto/rrhh', [ContactController::class, 'storeJob'])->name('contact.job');
