@@ -8,9 +8,9 @@ use App\Models\Location;
 class LocationController extends Controller
 {
     public function index(){
-        $locations = Locations::orderBy('province')->orderBy('city')->get();
+        $locations = Location::orderBy('province')->orderBy('city')->get();
 
-        return Inertia::render('Locations/index', [
+        return Inertia::render('Locations/Index', [
             'locations' => $locations,
         ]);
     }
