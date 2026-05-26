@@ -10,14 +10,19 @@ class SiteContentSeeder extends Seeder
     public function run(): void
     {
         $contents = [
-            'hero_title' => 'Snacks que te acompañan',
-            'hero_subtitle' => 'Descubrí nuestra línea completa de productos pensados para disfrutar en cualquier momento del día.',
-            'nosotros_title' => 'Conocenos',
-            'nosotros_text' => 'En Nikitos llevamos más de 30 años elaborando snacks de calidad para toda la familia. Combinamos tradición e innovación para ofrecer productos ricos, saludables y al alcance de todos.',
+            ['key' => 'hero_title',         'type' => 'text',  'value' => 'Nikitos Snacks'],
+            ['key' => 'hero_subtitle',      'type' => 'text',  'value' => 'Nikitos se encuentra presente en el mercado local desde hace 40 años.'],
+            ['key' => 'nosotros_title',     'type' => 'text',  'value' => 'Nosotros'],
+            ['key' => 'nosotros_text',      'type' => 'text',  'value' => 'Nikitos se encuentra presente en el mercado local desde hace 40 años. Ofreciendo un variado portfolio de snacks , tales como Pizzitos, Palitos salados, Maikitos de Queso, Papas Fritas, Cereales, Pochoclos Acaramelados, Bolitas/Aritos dulces, y Jugos para Congelar. El objetivo es llegar a los consumidores con ingredientes de calidad, contando con presencia de venta en todo el país y atención de excelencia.'],
+            ['key' => 'about_hero_image',   'type' => 'image', 'value' => null],
+            ['key' => 'about_1_image',      'type' => 'image', 'value' => null],
+            ['key' => 'about_2_image',      'type' => 'image', 'value' => null],
+            ['key' => 'about_3_image',      'type' => 'image', 'value' => null],
+            ['key' => 'about_4_image',      'type' => 'image', 'value' => null],
         ];
 
-        foreach ($contents as $key => $value) {
-            SiteContent::updateOrCreate(['key' => $key], ['value' => $value]);
+        foreach ($contents as $content) {
+            SiteContent::updateOrCreate(['key' => $content['key']], $content);
         }
     }
 }

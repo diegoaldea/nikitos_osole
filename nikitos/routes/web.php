@@ -42,7 +42,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('job-applications', [JobApplicationController::class, 'index'])->name('job-applications.index');
     Route::patch('job-applications/{application}/read', [JobApplicationController::class, 'markAsRead'])->name('job-applications.read');
     Route::get('site-contents', [SiteContentController::class, 'index'])->name('site-contents.index');
-    Route::put('site-contents', [SiteContentController::class, 'update'])->name('site-contents.update');
+    Route::post('site-contents', [SiteContentController::class, 'update'])->name('site-contents.update');
 });
 
 Route::middleware('auth')->group(function () {
