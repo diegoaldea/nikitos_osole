@@ -1,14 +1,14 @@
 <template>
     <PublicLayout>
         <section class="relative h-[280px] md:h-[410px]">
-            <img src="/images/img-locations.png" alt="Donde comprar" class="w-full h-full object-cover" />
+            <img src="/images/img-locations.png" alt="Donde comprar" class="w-full h-full object-cover object-bottom" />
             <div class="absolute inset-0 flex items-center justify-center">
                 <h1 class="text-4xl md:text-6xl mt-3 font-bold text-white">Donde comprar</h1>
             </div>
         </section>
 
         <section class="py-12">
-            <div class="mx-auto px-4 md:px-16">
+            <div class="max-w-[1224px] mx-auto px-4">
                 <div class="flex flex-col md:flex-row gap-7">
                     <div class="w-full md:w-[380px] shrink-0 bg-white rounded-xl shadow-md p-5">
                         <select v-model="selectedProvince" class="w-full border border-black rounded px-3 py-2 mb-5 text-gray-700 focus:outline-none text-sm">

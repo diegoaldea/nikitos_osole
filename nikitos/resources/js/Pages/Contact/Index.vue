@@ -1,14 +1,14 @@
 <template>
     <PublicLayout>
         <section class="relative h-[280px] md:h-[410px]">
-            <img src="/images/img-contact.png" alt="Contacto" class="w-full h-full object-cover" />
+            <img src="/images/img-contact.png" alt="Contacto" class="w-full h-full object-cover object-bottom" />
             <div class="absolute inset-0 flex items-center justify-center">
                 <h1 class="text-4xl md:text-6xl mt-3 font-bold text-white">Contacto</h1>
             </div>
         </section>
 
         <section class="py-11">
-            <div class="mx-auto px-6 md:px-16 flex flex-col md:flex-row gap-6 md:gap-0">
+            <div class="max-w-[1224px] mx-auto px-6 flex flex-col md:flex-row gap-6 md:gap-0">
                 <!-- Tabs -->
                 <div class="flex flex-col gap-4 pt-2 shrink-0 text-xl w-full md:w-1/3">
                     <button @click="activeTab = 'ventas'"
@@ -187,7 +187,7 @@
         </section>
 
         <section class="py-12">
-            <div class="mx-auto px-6 md:px-16 flex flex-col md:flex-row gap-8 md:gap-12">
+            <div class="max-w-[1224px] mx-auto px-6 flex flex-col md:flex-row gap-8 md:gap-12">
                 <div class="w-full md:w-auto" style="flex: 0 0 32%;">
                     <h3 class="text-xl font-bold text-gray-900 mb-6 text-center md:text-left">Datos de contacto</h3>
                     <div class="flex flex-col gap-5 text-gray-600">

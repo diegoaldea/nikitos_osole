@@ -1,7 +1,7 @@
 <template>
     <PublicLayout>
         <section class="relative h-[280px] md:h-[410px]">
-            <img :src="aboutImage('about_hero_image', '/images/img-about-us.png')" alt="Nosotros" class="w-full h-full object-cover" />
+            <img :src="aboutImage('about_hero_image', '/images/img-about-us.png')" alt="Nosotros" class="w-full h-full object-cover object-bottom" />
             <div class="absolute inset-0 flex items-center justify-center">
                 <h1 class="text-4xl md:text-6xl mt-3 font-bold text-white">Nosotros</h1>
             </div>
@@ -16,7 +16,7 @@
             </AboutSection>
 
             <!-- Secciones normales dentro del contenedor -->
-            <div class="mx-auto px-6 md:px-16">
+            <div class="max-w-[1224px] mx-auto px-6">
                 <AboutSection
                     title="Nuestra planta modelo"
                     description="Con una vocación de reinversión permanente en tecnología de punta y de mejora continua en los procesos productivos, trabajamos para superar nuestros propios estándares de productividad, con operaciones industriales que se desarrollan bajo un Sistema de Gestión Integral (SGI) diseñado por y para Nikitos, que contempla las características propias de la empresa y las bases de las distintas herramientas para la gestión implementadas en el mercado. Contamos con una Planta Industrial de 5500m2, en Buenos Aires, Argentina y otra en Montevideo, Uruguay."
