@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Services\ImageOptimizer;
 
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -32,7 +33,7 @@ class CategoryController extends Controller
         $imagePath = null;
 
         if($request->hasFile('image')){
-            $imagePath = $request->file('image')->store('categories', 'public');
+            $imagePath = ImageOptimizer::store($request->file('image'), 'categories');
         }
 
         Category::create([
@@ -61,7 +62,8 @@ class CategoryController extends Controller
         $imagePath = $category->image;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('categories', 'public');
+            ImageOptimizer::delete($category->image);
+            $imagePath = ImageOptimizer::store($request->file('image'), 'categories');
         }
 
         $category->update([
@@ -75,6 +77,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        ImageOptimizer::delete($category->image);
         $category->delete();
 
         return redirect()->route('admin.categories.index')->with('success', 'Categoría eliminada correctamente.');

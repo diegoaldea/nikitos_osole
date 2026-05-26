@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateProductRequest;
 use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Category;
+use App\Services\ImageOptimizer;
 
 class ProductController extends Controller
 {
@@ -36,7 +37,7 @@ class ProductController extends Controller
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
+            $imagePath = ImageOptimizer::store($request->file('image'), 'products');
         }
 
         Product::create([
@@ -72,7 +73,8 @@ class ProductController extends Controller
         $imagePath = $product->image;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
+            ImageOptimizer::delete($product->image);
+            $imagePath = ImageOptimizer::store($request->file('image'), 'products');
         }
 
         $product->update([
@@ -90,6 +92,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        ImageOptimizer::delete($product->image);
         $product->delete();
 
         return redirect()->route('admin.products.index')->with('success', 'Producto eliminado correctamente.');

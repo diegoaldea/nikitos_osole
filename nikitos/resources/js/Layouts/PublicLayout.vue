@@ -17,10 +17,14 @@
                 </div>
 
                 <!-- Desktop login -->
-                <Link :href="route('login')" class="hidden md:flex bg-orange-400 text-white px-6 py-2 rounded-full hover:bg-orange-600 items-center gap-2">
+                <button
+                    type="button"
+                    @click="loginOpen = !loginOpen"
+                    class="hidden md:flex bg-orange-400 text-white px-6 py-2 rounded-full hover:bg-orange-600 items-center gap-2"
+                >
                     Ingresar
                     <Lock class="w-4 h-4" />
-                </Link>
+                </button>
 
                 <!-- Hamburger button -->
                 <button @click="mobileMenuOpen = true" class="md:hidden text-gray-900">
@@ -48,12 +52,86 @@
                         <Link :href="route('about.index')" @click="mobileMenuOpen = false" :class="route().current('about.*') ? 'font-bold' : 'font-normal'">Nosotros</Link>
                         <Link :href="route('contact.index')" @click="mobileMenuOpen = false" :class="route().current('contact.*') ? 'font-bold' : 'font-normal'">Contacto</Link>
                     </div>
-                    <Link :href="route('login')" class="bg-orange-400 text-white px-6 py-2 rounded-full hover:bg-orange-600 flex items-center gap-2 w-fit">
+                    <button
+                        type="button"
+                        @click="mobileMenuOpen = false; loginOpen = true"
+                        class="bg-orange-400 text-white px-6 py-2 rounded-full hover:bg-orange-600 flex items-center gap-2 w-fit"
+                    >
                         Ingresar
                         <Lock class="w-4 h-4" />
-                    </Link>
+                    </button>
                 </div>
             </Transition>
+        </div>
+
+        <!-- Login modal -->
+        <div v-if="loginOpen" class="fixed inset-0 z-[110]">
+            <div class="absolute inset-0 bg-black bg-opacity-30" @click="loginOpen = false"></div>
+
+            <div
+                class="absolute left-1/2 -translate-x-1/2 top-24 sm:top-28 md:left-auto md:translate-x-0 md:right-8 lg:right-[calc((100vw-1224px)/2+32px)] md:top-32 w-[92vw] max-w-[360px] bg-white rounded-xl shadow-2xl p-8"
+            >
+                <button
+                    type="button"
+                    @click="loginOpen = false"
+                    class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+                    aria-label="Cerrar"
+                >
+                    <X class="w-5 h-5" />
+                </button>
+
+                <form @submit.prevent="submitLogin" class="flex flex-col gap-4">
+                    <div>
+                        <label for="login-email" class="block text-gray-800 font-medium mb-2">Usuario</label>
+                        <input
+                            id="login-email"
+                            v-model="loginForm.email"
+                            type="email"
+                            required
+                            autocomplete="username"
+                            class="w-full border border-gray-200 rounded-md px-3 py-2 focus:border-orange-400 focus:ring-orange-400"
+                        />
+                        <p v-if="loginForm.errors.email" class="mt-1 text-sm text-red-600">{{ loginForm.errors.email }}</p>
+                    </div>
+
+                    <div>
+                        <label for="login-password" class="block text-gray-800 font-medium mb-2">Contraseña</label>
+                        <input
+                            id="login-password"
+                            v-model="loginForm.password"
+                            type="password"
+                            required
+                            autocomplete="current-password"
+                            class="w-full border border-gray-200 rounded-md px-3 py-2 focus:border-orange-400 focus:ring-orange-400"
+                        />
+                        <Link
+                            :href="route('password.request')"
+                            class="block mt-1 text-sm text-gray-500 hover:text-gray-700"
+                            @click="loginOpen = false"
+                        >
+                            ¿Olvidaste la contraseña?
+                        </Link>
+                    </div>
+
+                    <hr class="border-gray-200" />
+
+                    <button
+                        type="submit"
+                        :disabled="loginForm.processing"
+                        class="bg-orange-400 hover:bg-orange-500 text-white font-medium py-2 rounded-full transition disabled:opacity-50"
+                    >
+                        Ingresar
+                    </button>
+
+                    <Link
+                        :href="route('register')"
+                        class="text-center text-sm text-gray-500 hover:text-gray-700"
+                        @click="loginOpen = false"
+                    >
+                        ¿No tenes cuenta? Registrate
+                    </Link>
+                </form>
+            </div>
         </div>
 
         <main class="flex-1">
@@ -143,10 +221,27 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import { MapPin, Phone, Mail, Clock, Lock, Menu, X } from '@lucide/vue';
 
 const mobileMenuOpen = ref(false);
+const loginOpen = ref(false);
+
+const loginForm = useForm({
+    email: '',
+    password: '',
+    remember: false,
+});
+
+const submitLogin = () => {
+    loginForm.post(route('login'), {
+        onSuccess: () => {
+            loginOpen.value = false;
+            loginForm.reset();
+        },
+        onFinish: () => loginForm.reset('password'),
+    });
+};
 </script>
 
 <style scoped>

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateRecipeRequest;
 
 use Inertia\Inertia;
 use App\Models\Recipe;
+use App\Services\ImageOptimizer;
 
 class RecipeController extends Controller
 {
@@ -31,7 +32,7 @@ class RecipeController extends Controller
         $imagePath = null;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('recipes', 'public');
+            $imagePath = ImageOptimizer::store($request->file('image'), 'recipes');
         }
 
         Recipe::create([
@@ -63,7 +64,8 @@ class RecipeController extends Controller
         $imagePath = $recipe->image;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('recipes', 'public');
+            ImageOptimizer::delete($recipe->image);
+            $imagePath = ImageOptimizer::store($request->file('image'), 'recipes');
         }
 
         $recipe->update([
@@ -80,6 +82,7 @@ class RecipeController extends Controller
 
     public function destroy(Recipe $recipe)
     {
+        ImageOptimizer::delete($recipe->image);
         $recipe->delete();
 
         return redirect()->route('admin.recipes.index')->with('success', 'Receta eliminada correctamente.');
