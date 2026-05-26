@@ -14,11 +14,11 @@ class SiteContentSeeder extends Seeder
             ['key' => 'hero_subtitle',      'type' => 'text',  'value' => 'Nikitos se encuentra presente en el mercado local desde hace 40 años.'],
             ['key' => 'nosotros_title',     'type' => 'text',  'value' => 'Nosotros'],
             ['key' => 'nosotros_text',      'type' => 'text',  'value' => 'Nikitos se encuentra presente en el mercado local desde hace 40 años. Ofreciendo un variado portfolio de snacks , tales como Pizzitos, Palitos salados, Maikitos de Queso, Papas Fritas, Cereales, Pochoclos Acaramelados, Bolitas/Aritos dulces, y Jugos para Congelar. El objetivo es llegar a los consumidores con ingredientes de calidad, contando con presencia de venta en todo el país y atención de excelencia.'],
-            ['key' => 'about_hero_image',   'type' => 'image', 'value' => null],
-            ['key' => 'about_1_image',      'type' => 'image', 'value' => null],
-            ['key' => 'about_2_image',      'type' => 'image', 'value' => null],
-            ['key' => 'about_3_image',      'type' => 'image', 'value' => null],
-            ['key' => 'about_4_image',      'type' => 'image', 'value' => null],
+            ['key' => 'about_hero_image',   'type' => 'image', 'value' => SeedImageHelper::copy('about', 'hero',    'site')],
+            ['key' => 'about_1_image',      'type' => 'image', 'value' => SeedImageHelper::copy('about', 'about-1', 'site')],
+            ['key' => 'about_2_image',      'type' => 'image', 'value' => SeedImageHelper::copy('about', 'about-2', 'site')],
+            ['key' => 'about_3_image',      'type' => 'image', 'value' => SeedImageHelper::copy('about', 'about-3', 'site')],
+            ['key' => 'about_4_image',      'type' => 'image', 'value' => SeedImageHelper::copy('about', 'about-4', 'site')],
         ];
 
         foreach ($contents as $content) {

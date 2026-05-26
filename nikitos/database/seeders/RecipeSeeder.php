@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Recipe;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class RecipeSeeder extends Seeder
 {
@@ -11,55 +12,40 @@ class RecipeSeeder extends Seeder
     {
         $recipes = [
             [
-                'title' => 'Snack mix para picada',
-                'preparation_time' => 10,
-                'servings' => 4,
-                'ingredients' => [
-                    '1 paquete de Papas Clásicas',
-                    '1 paquete de Maní Japonés',
-                    '1 paquete de Palitos Salados',
-                    'Aceitunas verdes a gusto',
-                    'Cubos de queso a gusto',
-                ],
-                'steps' => [
-                    'Mezclar los snacks en un bowl grande.',
-                    'Agregar aceitunas y cubos de queso.',
-                    'Servir frío y disfrutar con amigos.',
-                ],
-            ],
-            [
-                'title' => 'Trail mix energético',
+                'title' => '5 minutos',
                 'preparation_time' => 5,
-                'servings' => 2,
+                'servings' => 8,
                 'ingredients' => [
-                    '100g de Mix Frutos Secos',
-                    '50g de Garrapiñadas',
-                    'Pasas de uva a gusto',
+                    [
+                        'title' => null,
+                        'items' => [
+                            '1 bolsa de papas fritas Nikitos clásicas',
+                            'Aderezo para carne (30 g)',
+                            '2/3 taza de agua',
+                            '340 g de queso cheddar rallado',
+                            'Chiles jalapeños conservados',
+                            'Cebollas conservadas',
+                            'Salsa criolla',
+                            'Guacamole',
+                            'Crema',
+                            '450 g de carne de res molida',
+                        ],
+                    ],
                 ],
                 'steps' => [
-                    'Combinar todos los ingredientes en un recipiente.',
-                    'Repartir en bolsitas individuales.',
-                    'Ideal para llevar al trabajo o al gimnasio.',
-                ],
-            ],
-            [
-                'title' => 'Pochoclos gourmet',
-                'preparation_time' => 15,
-                'servings' => 3,
-                'ingredients' => [
-                    '1 paquete de Pochoclos Dulces',
-                    '50g de chocolate derretido',
-                    'Almendras tostadas en trozos',
-                ],
-                'steps' => [
-                    'Derretir el chocolate a baño maría.',
-                    'Bañar los pochoclos con el chocolate.',
-                    'Espolvorear las almendras y dejar enfriar 10 minutos.',
+                    'Precalienta el horno a 190 °C.',
+                    'Calienta el aceite en una sartén mediana a fuego medio-alto. Dora la carne molida hasta que esté completamente cocida. Agrega el aderezo para res y el agua y cocina hasta que el agua se evapore y se espese hasta formar una salsa.',
+                    'En una sartén grande de hierro fundido (u otra fuente para hornear) coloca las papas fritas, carne de ternera para tacos, la mitad del queso cheddar, las cebollas conservadas, los jalapeños conservados y la otra mitad de queso cheddar.',
+                    'Hornea durante 5 a 7 minutos, hasta que el queso burbujee y se derrita por completo.',
+                    'Sirve con crema, salsa criolla y guacamole.',
                 ],
             ],
         ];
 
         foreach ($recipes as $recipe) {
+            $slug = Str::slug($recipe['title']);
+            $recipe['image'] = SeedImageHelper::copy('recipes', $slug, 'recipes');
+
             Recipe::updateOrCreate(['title' => $recipe['title']], $recipe);
         }
     }
