@@ -1,16 +1,16 @@
 <template>
     <PublicLayout>
-        <section class="relative h-[410px]">
+        <section class="relative h-[280px] md:h-[410px]">
             <img src="/images/img-contact.png" alt="Contacto" class="w-full h-full object-cover" />
             <div class="absolute inset-0 flex items-center justify-center">
-                <h1 class="text-6xl mt-3 font-bold text-white">Contacto</h1>
+                <h1 class="text-4xl md:text-6xl mt-3 font-bold text-white">Contacto</h1>
             </div>
         </section>
 
         <section class="py-11">
-            <div class="mx-auto px-16 flex">
+            <div class="mx-auto px-6 md:px-16 flex flex-col md:flex-row gap-6 md:gap-0">
                 <!-- Tabs -->
-                <div class="flex flex-col gap-4 pt-2 shrink-0 text-xl" style="width: 33%">
+                <div class="flex flex-col gap-4 pt-2 shrink-0 text-xl w-full md:w-1/3">
                     <button @click="activeTab = 'ventas'"
                         class="flex items-center gap-2 text-left"
                         :class="activeTab === 'ventas' ? 'text-orange-500' : 'text-gray-800'">
@@ -26,7 +26,7 @@
                 <!-- Ventas form -->
                 <form v-if="activeTab === 'ventas'" @submit.prevent="submitSales" class="flex-1">
                     <div style="display: flex; flex-direction: column; gap: 2.25rem;">
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Razón social*</label>
                                 <input v-model="salesForm.business_name" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -38,7 +38,7 @@
                                 <span v-if="salesErrors.cuit" class="text-red-500 text-xs">{{ salesErrors.cuit }}</span>
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Tipo de Negocio*</label>
                                 <input v-model="salesForm.business_type" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -49,7 +49,7 @@
                                 <input v-model="salesForm.market_experience" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Dirección*</label>
                                 <input v-model="salesForm.address" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -61,7 +61,7 @@
                                 <span v-if="salesErrors.city" class="text-red-500 text-xs">{{ salesErrors.city }}</span>
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Teléfono*</label>
                                 <input v-model="salesForm.phone" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -72,7 +72,7 @@
                                 <input v-model="salesForm.mobile" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Horario de atención*</label>
                                 <input v-model="salesForm.business_hours" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -101,7 +101,7 @@
                 <!-- RRHH form -->
                 <form v-if="activeTab === 'rrhh'" @submit.prevent="submitJob" class="flex-1">
                     <div style="display: flex; flex-direction: column; gap: 1.95rem;">
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Nombre y apellido*</label>
                                 <input v-model="jobForm.name" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -113,7 +113,7 @@
                                 <span v-if="jobErrors.gender" class="text-red-500 text-xs">{{ jobErrors.gender }}</span>
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">DNI*</label>
                                 <input v-model="jobForm.dni" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -125,7 +125,7 @@
                                 <span v-if="jobErrors.birth_date" class="text-red-500 text-xs">{{ jobErrors.birth_date }}</span>
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Dirección*</label>
                                 <input v-model="jobForm.address" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -137,7 +137,7 @@
                                 <span v-if="jobErrors.city" class="text-red-500 text-xs">{{ jobErrors.city }}</span>
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Teléfono*</label>
                                 <input v-model="jobForm.phone" type="text" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
@@ -148,7 +148,7 @@
                                 <input v-model="jobForm.email" type="email" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900" />
                             </div>
                         </div>
-                        <div class="flex gap-8">
+                        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
                             <div class="flex-1">
                                 <label class="block text-base text-gray-500 mb-3">Puesto al que aspira*</label>
                                 <select v-model="jobForm.position" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-gray-900 bg-white">
@@ -187,9 +187,9 @@
         </section>
 
         <section class="py-12">
-            <div class="mx-auto px-16 flex gap-12">
-                <div style="flex: 0 0 32%;">
-                    <h3 class="text-xl font-bold text-gray-900 mb-6">Datos de contacto</h3>
+            <div class="mx-auto px-6 md:px-16 flex flex-col md:flex-row gap-8 md:gap-12">
+                <div class="w-full md:w-auto" style="flex: 0 0 32%;">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6 text-center md:text-left">Datos de contacto</h3>
                     <div class="flex flex-col gap-5 text-gray-600">
                         <p class="flex items-start gap-3">
                             <MapPin class="w-5 h-5 shrink-0 mt-0.5 text-orange-400" />

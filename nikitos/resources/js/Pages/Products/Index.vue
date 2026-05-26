@@ -8,7 +8,7 @@
         </section>
 
         <section class="bg-white py-14 mt-6 pt-6">
-            <div class="mx-auto px-16">
+            <div class="mx-auto px-[10px] md:px-16">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[25px]">
                     <CategoryCard v-for="category in categories" :key="category.id" :category="category" />
                 </div>
