@@ -15,7 +15,7 @@ class StoreRecipeRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:15360',
             'preparation_time' => 'required|integer|min:1',
             'servings' => 'required|integer|min:1',
             'ingredients' => 'required|array|min:1',
