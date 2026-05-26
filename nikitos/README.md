@@ -18,8 +18,9 @@ Sitio web institucional de Nikitos Snacks con panel de administración. Versión
 - **Composer 2** — [descargar](https://getcomposer.org/download/)
 - **Node.js 18+** y npm — [descargar](https://nodejs.org/en/download)
 - **MySQL 5.7+** — incluido en XAMPP
-- **Extensiones de PHP requeridas:** `gd`, `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `tokenizer`
-  - En XAMPP: abrir `C:\xampp\php\php.ini`, descomentar las líneas `;extension=gd`, etc. (quitar el `;`) y reiniciar Apache.
+- **Extensiones de PHP requeridas:** `gd`, `zip`, `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `tokenizer`
+  - En XAMPP: abrir `C:\xampp\php\php.ini`, descomentar las líneas `;extension=gd`, `;extension=zip`, etc. (quitar el `;`) y reiniciar Apache.
+  - La extensión `zip` es necesaria para que Composer descargue paquetes; `gd` es necesaria para procesar imágenes (Intervention Image).
 
 ## Instalación
 
@@ -60,6 +61,8 @@ DB_PASSWORD=
 > Crear la base de datos `nikitos`.
 
 ### 4. Migrar y sembrar la base de datos
+
+> MySQL debe estar iniciado en XAMPP
 
 ```bash
 php artisan migrate --seed
@@ -103,4 +106,4 @@ URL: [http://localhost:8000/admin](http://localhost:8000/admin)
 
 | Email | Contraseña |
 | --- | --- |
-| `admin@nikitos.com.ar` | `password` |
+| `admin@nikitos.com` | `nikitos123` |
