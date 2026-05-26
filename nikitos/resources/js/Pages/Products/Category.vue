@@ -16,15 +16,17 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-10">
-                    <aside class="w-full md:w-64 shrink-0">
-                        <ul class="flex flex-col gap-5">
-                            <li v-for="cat in categories" :key="cat.id">
+                    <aside class="w-full md:w-72 shrink-0">
+                        <ul class="border-t border-neutral-200 list-none p-0 m-0">
+                            <li v-for="cat in categories" :key="cat.id" class="border-b border-neutral-200">
                                 <Link
                                     :href="route('products.category', cat.id)"
-                                    class="flex items-start gap-3 text-gray-800 hover:text-gray-900"
+                                    preserve-scroll
+                                    :only="['category', 'products']"
+                                    class="cursor-pointer text-black py-4 px-4 flex gap-4 items-center duration-300 transition-colors hover:bg-orange-100"
                                     :class="cat.id === category.id ? 'font-bold' : 'font-normal'"
                                 >
-                                    <span class="inline-block w-1.5 h-6 rounded shrink-0 mt-0.5" :style="{ backgroundColor: cat.color }"></span>
+                                    <span class="block shrink-0" :style="{ backgroundColor: cat.color, width: '10px', height: '25px' }"></span>
                                     <span>{{ cat.name }}</span>
                                 </Link>
                             </li>
