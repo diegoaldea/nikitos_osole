@@ -17,10 +17,12 @@ class ProductController extends Controller
     }
 
     public function showCategory(Category $category){
-        $products = Product::where('category_id', $category->id)->get();
+        $categories = Category::all();
+        $products = Product::where('category_id', $category->id)->with('category')->get();
 
         return Inertia::render('Products/Category', [
             'category' => $category,
+            'categories' => $categories,
             'products' => $products,
         ]);
     }
