@@ -1,11 +1,11 @@
 <template>
     <PublicLayout>
         <div class="mx-auto">
-            <section class="relative h-screen flex items-end pb-36 md:pb-24 overflow-hidden" style="min-height: 100svh;">
-                <video autoplay muted loop playsinline class="absolute top-0 left-0 w-full h-[150%] object-cover">
+            <section class="relative min-h-screen overflow-hidden">
+                <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
                     <source src="/videos/nikitos-header.mp4" type="video/mp4" />
                 </video>
-                <div class="max-w-[90%] sm:max-w-[1224px] mx-auto absolute inset-0 mt-52 sm:mt-60 flex flex-col justify-start">
+                <div class="relative z-10 max-w-[90%] sm:max-w-[1224px] mx-auto w-full pt-[28vh] md:pt-[32vh] pb-[280px] md:pb-[480px]">
                     <h1 class="text-4xl md:text-8xl font-bold text-white mb-4 md:mb-6">{{ contents.hero_title }}</h1>
                     <p class="text-white text-base md:text-lg mb-8 md:mb-12 max-w-md">{{ contents.hero_subtitle }}</p>
                     <div class="flex flex-col md:flex-row gap-3 md:gap-4">
@@ -23,7 +23,7 @@
         <!-- Mobile nosotros -->
         <section id="nosotros" class="md:hidden z-10 relative" style="overflow: hidden; margin-top: -200px;">
             <img src="/images/img-nosotros-home-top.png" alt="" class="block" style="width: 100%; transform: scaleX(1.04); transform-origin: center; margin-bottom: -2px;" />
-            <div style="background-color: #FFA221; height: 200px;"></div>
+            <div style="background-color: #FFA221; min-height: 200px;"></div>
             <img src="/images/img-nosotros-home-bottom.png" alt="" class="block" style="width: 100%; transform: scaleX(1.04); transform-origin: center; margin-top: -2px;" />
             <div class="absolute inset-0 flex items-center px-6" style="padding-bottom: 70px;">
                 <div style="width: 50%;">

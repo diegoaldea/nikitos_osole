@@ -210,7 +210,7 @@
                     </div>
                 </div>
 
-                <div ref="mapContainer" class="flex-1 h-[500px] z-0" style="min-height: 380px;"></div>
+                <div ref="mapContainer" class="flex-1 h-[400px] md:h-[500px] z-0" style="min-height: 320px;"></div>
             </div>
         </section>
     </PublicLayout>

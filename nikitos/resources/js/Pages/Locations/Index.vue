@@ -30,7 +30,7 @@
                         </div>
                     </div>
 
-                    <div ref="mapContainer" class="flex-1 rounded-xl min-h-[560px] z-0"></div>
+                    <div ref="mapContainer" class="flex-1 rounded-xl min-h-[400px] md:min-h-[560px] z-0"></div>
                 </div>
             </div>
         </section>
