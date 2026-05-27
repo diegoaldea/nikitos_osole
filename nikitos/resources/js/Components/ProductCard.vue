@@ -1,5 +1,5 @@
 <template>
-    <Link :href="route('products.category', product.category_id)" class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col items-center gap-3 group">
+    <Link :href="route('products.show', product.id)" class="bg-white rounded-xl border border-gray-200 p-6 flex flex-col items-center gap-3 group">
         <img :src="`/storage/${product.image}`" :alt="product.name" class="w-48 h-48 object-contain" />
         <div class="text-center">
             <p class="text-sm font-medium mb-1" :style="{ color: product.category.color }">{{ product.category.name }}</p>
