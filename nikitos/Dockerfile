@@ -33,10 +33,15 @@ RUN composer dump-autoload --optimize --no-dev \
 
 # Apache sirve public/ en lugar de /var/www/html
 COPY docker/vhost.conf /etc/apache2/sites-available/000-default.conf
-# Solo puede haber un MPM cargado: los apt-get de arriba habilitan
-# mpm_event y la imagen ya trae mpm_prefork (AH00534).
-RUN a2dismod mpm_event mpm_worker 2>/dev/null || true \
-    && a2enmod mpm_prefork rewrite \
+# Apache aborta si hay mas de un MPM cargado (AH00534). Se borran todos
+# los enlaces y se deja unicamente prefork, que es el que necesita mod_php.
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.load \
+          /etc/apache2/mods-enabled/mpm_*.conf \
+    && ln -s ../mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load \
+    && ln -s ../mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf \
+    && echo "--- MPM cargados ---" \
+    && ls -1 /etc/apache2/mods-enabled/ | grep mpm \
+    && a2enmod rewrite \
     && mkdir -p storage/framework/cache/data \
                 storage/framework/sessions \
                 storage/framework/views \
