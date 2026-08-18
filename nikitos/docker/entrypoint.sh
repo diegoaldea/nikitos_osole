@@ -14,6 +14,9 @@ grep -rn "LoadModule mpm" /etc/apache2/ /usr/local/etc/ 2>/dev/null || echo "  (
 PORT="${PORT:-8080}"
 sed -ri "s/^Listen [0-9]+/Listen ${PORT}/" /etc/apache2/ports.conf
 sed -ri "s/<VirtualHost \*:[0-9]+>/<VirtualHost *:${PORT}>/" /etc/apache2/sites-available/000-default.conf
+echo "[entrypoint] PORT=${PORT}"
+echo "[entrypoint] ports.conf: $(grep -c '^Listen' /etc/apache2/ports.conf) directiva(s) -> $(grep '^Listen' /etc/apache2/ports.conf | tr '\n' ' ')"
+echo "[entrypoint] vhost: $(grep -o '<VirtualHost [^>]*>' /etc/apache2/sites-available/000-default.conf)"
 
 php artisan storage:link || true
 php artisan migrate --force
