@@ -33,14 +33,18 @@ RUN composer dump-autoload --optimize --no-dev \
 
 # Apache sirve public/ en lugar de /var/www/html
 COPY docker/vhost.conf /etc/apache2/sites-available/000-default.conf
-RUN a2enmod rewrite \
+# Solo puede haber un MPM cargado: los apt-get de arriba habilitan
+# mpm_event y la imagen ya trae mpm_prefork (AH00534).
+RUN a2dismod mpm_event mpm_worker 2>/dev/null || true \
+    && a2enmod mpm_prefork rewrite \
     && mkdir -p storage/framework/cache/data \
                 storage/framework/sessions \
                 storage/framework/views \
                 storage/logs \
                 storage/app/public \
                 bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && apache2ctl configtest
 
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
